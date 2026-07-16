@@ -110,9 +110,14 @@ Optional host enrichments (country, language logo, founder overrides) go in the 
 
 ## Tests
 
+Colocated Vitest suites live under `src/**/__tests__/`:
+
 ```bash
 npm test
+# from the Gitwork monorepo root:
+# npm run test:gitrank
 ```
+
 
 ## License
 

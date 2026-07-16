@@ -1,13 +1,15 @@
 import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { buildCard, type Signals } from "../src/index";
+import { buildCard } from "../buildCard";
+import { baseSignals } from "./fixtures/signals";
 
-const SRC = join(import.meta.dirname, "../src");
+const SRC = join(import.meta.dirname, "..");
 
 function walkTs(dir: string): string[] {
   const out: string[] = [];
   for (const name of readdirSync(dir, { withFileTypes: true })) {
+    if (name.name === "__tests__" || name.name === "node_modules") continue;
     const path = join(dir, name.name);
     if (name.isDirectory()) out.push(...walkTs(path));
     else if (name.name.endsWith(".ts")) out.push(path);
@@ -27,32 +29,8 @@ describe("gitrank package boundary", () => {
 });
 
 describe("buildCard", () => {
-  const signals: Signals = {
-    login: "pure-dev",
-    name: "Pure Dev",
-    avatarUrl: "https://avatars.githubusercontent.com/u/1?v=4",
-    location: "Gaborone",
-    followers: 50,
-    account_age_years: 3,
-    public_repos: 20,
-    total_stars_owned: 100,
-    max_repo_stars: 40,
-    languages: 5,
-    rankedLanguages: ["TypeScript"],
-    topLanguage: "TypeScript",
-    recent_contributions: 300,
-    active_days_recent: 100,
-    active_years: 3,
-    total_contributions_lifetime: 1500,
-    prs_to_others: 5,
-    reviews: 3,
-    issues_closed: 4,
-    recent_commits: 280,
-    recent_spike: false,
-  };
-
   it("scores without host enrichments", () => {
-    const card = buildCard(signals);
+    const card = buildCard(baseSignals());
     expect(card.country).toBe("");
     expect(card.languageLogo).toBeNull();
     expect(card.founder).toBeUndefined();
@@ -62,11 +40,29 @@ describe("buildCard", () => {
   });
 
   it("accepts optional enrichments", () => {
-    const card = buildCard(signals, {
+    const card = buildCard(baseSignals(), {
       country: "bw",
       languageLogo: { name: "TypeScript", slug: "typescript-original" },
     });
     expect(card.country).toBe("bw");
     expect(card.languageLogo?.slug).toBe("typescript-original");
+  });
+
+  it("applies founder options when the login matches", () => {
+    const card = buildCard(baseSignals({ login: "Ada" }), {
+      founders: {
+        ada: {
+          art: "/cards/founder-red.png",
+          accent: "#ff2f45",
+          label: "GITFUT",
+          tagline: "Founder of GitFut",
+        },
+      },
+      founderOverall: { ada: 93 },
+    });
+    expect(card.finish).toBe("founder");
+    expect(card.overall).toBe(93);
+    expect(card.founder?.art).toContain("founder-red");
+    expect(card.archetype).toBe("Founder");
   });
 });
