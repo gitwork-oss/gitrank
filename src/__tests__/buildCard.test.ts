@@ -2,14 +2,15 @@ import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { buildCard } from "../buildCard";
-import { baseSignals } from "./fixtures/signals";
+import { baseSignals } from "../testing/signals";
 
 const SRC = join(import.meta.dirname, "..");
 
 function walkTs(dir: string): string[] {
   const out: string[] = [];
   for (const name of readdirSync(dir, { withFileTypes: true })) {
-    if (name.name === "__tests__" || name.name === "node_modules") continue;
+    if (name.name === "__tests__" || name.name === "testing" || name.name === "node_modules")
+      continue;
     const path = join(dir, name.name);
     if (name.isDirectory()) out.push(...walkTs(path));
     else if (name.name.endsWith(".ts")) out.push(path);

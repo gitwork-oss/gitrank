@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { METRIC_LABELS } from "../../copy";
-import { baseSignals } from "../../__tests__/fixtures/signals";
+import { baseSignals } from "../../testing/signals";
 import { deriveMetrics } from "../metrics";
 
 describe("deriveMetrics", () => {

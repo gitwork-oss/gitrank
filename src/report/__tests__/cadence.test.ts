@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { baseSignals } from "../../__tests__/fixtures/signals";
+import { baseSignals } from "../../testing/signals";
 import { CADENCE_REASONS } from "../../copy/cadence";
 import { deriveStyle } from "../cadence";
 

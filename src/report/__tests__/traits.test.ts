@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { baseSignals } from "../../__tests__/fixtures/signals";
+import { baseSignals } from "../../testing/signals";
 import { deriveSkillMoves, deriveWeakFoot, deriveWorkRate } from "../traits";
 import type { Stats } from "../../types";
 

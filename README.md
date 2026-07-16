@@ -110,7 +110,7 @@ Optional host enrichments (country, language logo, founder overrides) go in the 
 
 ## Tests
 
-Colocated Vitest suites live under `src/**/__tests__/`:
+Each source directory has a `__tests__/` folder. Test files mirror the module name (`finish.ts` → `__tests__/finish.test.ts`).
 
 ```bash
 npm test

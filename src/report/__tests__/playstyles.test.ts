@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { PLAYSTYLE_MAX_SHOWN } from "../../config/tuning";
-import { baseSignals } from "../../__tests__/fixtures/signals";
+import { baseSignals } from "../../testing/signals";
 import { derivePlaystyles } from "../playstyles";
 
 describe("derivePlaystyles", () => {

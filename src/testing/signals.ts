@@ -1,4 +1,4 @@
-import type { Signals } from "../../types";
+import type { Signals } from "../types";
 
 /** Modest public-profile fixture; override fields per suite. */
 export function baseSignals(overrides: Partial<Signals> = {}): Signals {

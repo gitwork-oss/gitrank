@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { buildCard } from "../../buildCard";
-import { baseSignals } from "../../__tests__/fixtures/signals";
+import { baseSignals } from "../../testing/signals";
 import { ovrAt } from "../role";
 
 describe("ovrAt", () => {
